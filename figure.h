@@ -1,36 +1,29 @@
-
+#include <vector>
 
 class Shape
 {
 private:
-
-protected:
-struct point
-{
-    double x;
-    double y;
-};
-
+std::vector<std::pair<long, long>> points{};
 public:
-
-    virtual double calculatePerimeter()const=0;
-    virtual double calculateArea() const = 0;
-    virtual bool isSpecial() const = 0;
-};
-
-class Triangle:public Shape
-{
-private:
-    point a,b,c;
-public:
-    Triangle(point p1,point p2, point p3):a(p1),b(p2),c(c)
-    {}
-
-    double calculatePerimeter() const override 
-    {
-        double sideAB = distance(a, b);
-        double sideBC = distance(b, c);
-        double sideCA = distance(c, a);
-        return sideAB + sideBC + sideCA;
-    }
+Shape()
+{}
+void push_back(long x,long y){
+    points.push_back(std::pair<long, long>{x, y});
 }
+
+void push_back(std::pair<long, long> point){
+    points.push_back(point);
+}
+    friend void perimeter(std::vector<std::pair<long, long>> points){};
+~Shape(){points.clear();};
+};
+long distanceBetweenPoints(std::pair<long, long> point1,std::pair<long, long> point2){
+    long distance =sqrt(square((point2.first-point1.first))+(square(point2.second-point1.second)));
+};
+void perimeter(std::vector<std::pair<long, long>> points){
+
+};
+long square(long x)
+{
+return (x * x);
+};
