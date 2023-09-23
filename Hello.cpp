@@ -2,7 +2,8 @@
 #include <algorithm>
 #include "sotrtAlgorithm.h"
 #include "figure.h"
-#include <cmath>
+
+/*
 int main() {
     class Shape shape;
     long x, y,x1,y1,x2,y2;
@@ -18,5 +19,26 @@ int main() {
     cout<<shape.triangArea();
     cout<<'\n';
     shape.print();
+    return 0;
+}*/
+int main() {
+    std::vector<Shape*> shapes;
+
+    shapes.push_back(new Triangle(/* координати вершин трикутника */));
+    shapes.push_back(new Rectangle(/* координати вершин прямокутника */));
+
+    for (Shape* shape : shapes) {
+        std::cout << "Периметр: " << shape->perimeter() << std::endl;
+        std::cout << "Площа: " << shape->area() << std::endl;
+
+        if (shape->isSpecial()) {
+            std::cout << "Це спеціальна фігура." << std::endl;
+        } else {
+            std::cout << "Це не спеціальна фігура." << std::endl;
+        }
+
+        delete shape;
+    }
+
     return 0;
 }

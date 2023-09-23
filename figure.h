@@ -1,5 +1,5 @@
 #include <vector>
-
+/*
 class Shape
 {
 private:
@@ -27,7 +27,7 @@ static long distanceBetweenPoints(std::pair<long, long> point1,std::pair<long, l
         return sqrt(std::pow(point2.first-point1.first,2)+std::pow(point2.second-point1.second,2));
 }
 //Функція знаходження периметру яка використовує ітератори
-long perimeter(/*std::vector<std::pair<long, long> > points*/)
+long perimeter()
 {
     //Базовий випадок - невистачає точок
     if(points.size()<3)
@@ -72,3 +72,81 @@ long triangArea()
 //Деструктор
 ~Shape(){points.clear();}
 };
+*/
+#include <cmath>
+
+struct Point {
+    double x;
+    double y;
+};
+
+class Shape {
+public:
+    virtual double perimeter() const = 0;
+    virtual double area() const = 0;
+    virtual bool isSpecial() const = 0;
+
+    virtual ~Shape() {}
+
+    // Статичний метод для обчислення відстані між двома точками
+    static double distanceBetweenPoints(const Point& p1, const Point& p2) {
+        return std::sqrt(std::pow(p2.x - p1.x, 2) + std::pow(p2.y - p1.y, 2));
+    }
+};
+
+class Triangle : public Shape {
+private:
+    std::vector<Point> points;
+
+public:
+    Triangle(const std::vector<Point>& pts) : points(pts) {}
+
+    double perimeter() const override {
+        // Обчислення периметру трикутника
+        double p = 0.0;
+        for (int i = 0; i < 3; ++i) {
+            p += distanceBetweenPoints(points[i], points[(i + 1) % 3]);
+        }
+        return p;
+    }
+
+    double area() const override {
+        // Обчислення площі трикутника за формулою Гаусса
+        double a = distanceBetweenPoints(points[0], points[1]);
+        double b = distanceBetweenPoints(points[1], points[2]);
+        double c = distanceBetweenPoints(points[2], points[0]);
+        double s = (a + b + c) / 2.0;
+        return std::sqrt(s * (s - a) * (s - b) * (s - c));
+    }
+
+    bool isSpecial() const override {
+        // Реалізація для перевірки спеціальних трикутників
+        // ...
+    }
+};
+
+class Rectangle : public Shape {
+private:
+    std::vector<Point> points;
+
+public:
+    Rectangle(const std::vector<Point>& pts) : points(pts) {}
+
+    double perimeter() const override {
+        // Обчислення периметру прямокутника
+        // ...
+    }
+
+    double area() const override {
+        // Обчислення площі прямокутника за формулою Гаусса
+        double a = distanceBetweenPoints(points[0], points[1]);
+        double b = distanceBetweenPoints(points[1], points[2]);
+        return a * b;
+    }
+
+    bool isSpecial() const override {
+        // Реалізація для перевірки прямокутників
+        // ...
+    }
+};
+
