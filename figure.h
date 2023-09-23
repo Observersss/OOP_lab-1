@@ -2,40 +2,34 @@
 
 class Shape
 {
-protected:
-   static long square(long x)
-    {
-        return (x * x);
-    }
 private:
 std::vector<std::pair<long, long> > points;
 public:
+//Базовий конструктор ініціалізації
 Shape()
 {}
-
+//Вивід всіх точок у форматі (x;y)
 void print()
 {
-    for(int obj=0;obj<points.size();obj++)
-        cout<<'('<<points[obj].first<<';'<<points[obj].second<<")\n";
+    for (const auto& point : points) {
+        std::cout << '(' << point.first << ';' << point.second << ")\n";
+    }
 }
-
+//Додавання нової точки до вектору за допомогою make_pair
 void push_back(long x,long y)
 {
-    points.push_back(std::pair<long, long>(x, y));
+    points.push_back(std::make_pair(x, y));
 }
-
-void push_back(std::pair<long, long> point)
+//Функція відстані між двома точками
+static long distanceBetweenPoints(std::pair<long, long> point1,std::pair<long, long> point2)
 {
-    points.push_back(point);
-}
-
-long distanceBetweenPoints(std::pair<long, long> point1,std::pair<long, long> point2)
-{
+        //Математичний запис √( (Bx-Ay)^2 +(By-Ay)^2)
         return sqrt(std::pow(point2.first-point1.first,2)+std::pow(point2.second-point1.second,2));
 }
-
-long perimeter(std::vector<std::pair<long, long> > points)
+//Функція знаходження периметру яка використовує ітератори
+long perimeter(/*std::vector<std::pair<long, long> > points*/)
 {
+    //Базовий випадок - невистачає точок
     if(points.size()<3)
     {
         cout<<"Неможливо знайти периметер з двох точок\n";
@@ -49,7 +43,6 @@ long perimeter(std::vector<std::pair<long, long> > points)
 
     while (curr!=points.end())
     {
-        perimeter+=distanceBetweenPoints(points[i-1],points[i]);
         perimeter+= distanceBetweenPoints(*prev,*curr);
         ++prev;
         ++curr;
@@ -57,10 +50,25 @@ long perimeter(std::vector<std::pair<long, long> > points)
     perimeter+= distanceBetweenPoints(points.back(),points.front());
     return perimeter;
 }
-long perimeter(){
-        long perimeter = distanceBetweenPoints(points[0],points[1]);
-        return perimeter;
+//Функція площі трикутника за Героном
+long triangArea()
+{
+    if(points.size()<3)
+    {
+        cout<<"Неможливо знайти площу з двох точок\n";
+        return 0;
     }
+    //Для обчислення площі трикутника використовується формула Герона,яка використовує половину периметру
+    // (p) та довжини сторін (a, b, c):
+    long p=perimeter();
+    long a = distanceBetweenPoints(points[0],points[1]);
+    long b = distanceBetweenPoints(points[1],points[2]);
+    long c = distanceBetweenPoints(points[2],points[0]);
 
+    long area = sqrt(p * (p - a) * (p - b) * (p - c));
+
+    return area;
+}
+//Деструктор
 ~Shape(){points.clear();}
 };

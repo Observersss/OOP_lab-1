@@ -15,6 +15,8 @@ int main() {
     cout<<'\n';
     cout<<shape.perimeter();
     cout<<'\n';
+    cout<<shape.triangArea();
+    cout<<'\n';
     shape.print();
     return 0;
 }
