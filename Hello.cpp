@@ -3,41 +3,81 @@
 #include "sotrtAlgorithm.h"
 #include "figure.h"
 
-/*
+
 int main() {
-    class Shape shape;
-    long x, y,x1,y1,x2,y2;
-    cin >> x >> y;
-    cin>>x1>>y1;
-    cin>>x2>>y2;
-    shape.push_back(x, y);
-    shape.push_back(x1,y1);
-    shape.push_back(x2,y2);
-    cout<<'\n';
-    cout<<shape.perimeter();
-    cout<<'\n';
-    cout<<shape.triangArea();
-    cout<<'\n';
-    shape.print();
-    return 0;
-}*/
-int main() {
-    std::vector<Shape*> shapes;
+    vector<Shape*> shapes; // Вектор для зберігання об'єктів фігур
+    vector<Point> points;
+    while (true) {
+        std::cout << "Оберіть опцію:" << std::endl;
+        std::cout << "1. Додати трикутник" << std::endl;
+        std::cout << "2. Додати чотирикутник" << std::endl;
+        std::cout << "3. Додати п'ятикутник" << std::endl;
+        std::cout << "4. Додати багатокутник" << std::endl;
+        std::cout << "5. Переглянути інформацію про фігури" << std::endl;
+        std::cout << "6. Вийти" << std::endl;
 
-    shapes.push_back(new Triangle(/* координати вершин трикутника */));
-    shapes.push_back(new Rectangle(/* координати вершин прямокутника */));
+        int choice;
+        std::cin >> choice;
 
-    for (Shape* shape : shapes) {
-        std::cout << "Периметр: " << shape->perimeter() << std::endl;
-        std::cout << "Площа: " << shape->area() << std::endl;
+        switch (choice) {
+            case 1: {
+                // Додавання трикутник
+                // Отримати координати точок трикутника, наприклад, з введення користувача
+                int v =3;
+                for (int i = 0; i < v; ++i) {
+                    Point point;
+                    std::cout << "Введіть координати точки " << i + 1 << " (x y): ";
+                    std::cin >> point.x >> point.y;
+                    points.push_back(point);
+                }
+                // Створити об'єкт Triangle
+                Triangle* pTriangle = new Triangle(points);
+                // Додати об'єкт Triangle до вектора shapes
+                shapes.push_back(pTriangle);
+                //points.clear();
+                std::cout << "Трикутник додано." << std::endl;
+                break;
+            }
 
-        if (shape->isSpecial()) {
-            std::cout << "Це спеціальна фігура." << std::endl;
-        } else {
-            std::cout << "Це не спеціальна фігура." << std::endl;
+            case 2: {
+
+                break;
+            }
+            case 3: {
+                // Додавання п'ятикутника
+                std::vector<Point> pentagonPoints;
+                // Отримати координати точок п'ятикутника
+                // Створити об'єкт Pentagon та додати його до вектора shapes
+                break;
+            }
+            case 4: {
+                // Додавання багатокутника
+                std::vector<Point> polygonPoints;
+                // Отримати координати точок багатокутника
+                // Створити об'єкт Polygon та додати його до вектора shapes
+                break;
+            }
+            case 5: {
+                // Перегляд інформації про фігури
+                for (const Shape* shape : shapes) {
+                    std::cout << "Периметр: " << shape->perimeter() << std::endl;
+                    std::cout << "Площа: " << shape->gaussArea() << std::endl;
+                    std::cout << "Спеціальна фігура: " << (shape->isSpecial() ? "Так" : "Ні") << std::endl;
+                }
+                break;
+            }
+            case 6: {
+                // Вихід з програми
+                // Звільнення пам'яті для об'єктів фігур
+                for (Shape* shape : shapes) {
+                    delete shape;
+                }
+
+            }
+            default:
+                std::cout << "Невірний вибір. Спробуйте ще раз." << std::endl;
+                break;
         }
-
-        delete shape;
     }
 
     return 0;
